@@ -22,7 +22,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	fmt.Println("Berhasil mendapatkan All Data")
+	fmt.Println("Berhasil Mendapatkan All Data")
 	temp.Execute(w, data)
 }
 
@@ -48,6 +48,7 @@ func Add(w http.ResponseWriter, r *http.Request) {
 			temp.Execute(w, nil)
 		}
 
+		fmt.Println("Berhasil Menambahkan Data Category")
 		http.Redirect(w, r, "/categories", http.StatusSeeOther)
 	}
 }
@@ -90,6 +91,7 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		fmt.Println("Berhasil Mengupdate Data Category")
 		http.Redirect(w, r, "/categories", http.StatusSeeOther)
 	}
 }
@@ -105,5 +107,6 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
+	fmt.Println("Berhasil Menghapus Data Category")
 	http.Redirect(w, r, "/categories", http.StatusSeeOther)
 }

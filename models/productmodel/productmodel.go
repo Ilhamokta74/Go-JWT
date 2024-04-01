@@ -73,3 +73,70 @@ func Create(product entities.Product) bool {
 
 	return LastInsertId > 0
 }
+
+func Detail(id int) entities.Product {
+	rows := config.DB.QueryRow(`
+	SELECT 
+			products.id, 
+			products.name, 
+			categories.name as category_name,
+			products.stock, 
+			products.description, 
+			products.created_at, 
+			products.updated_at 
+		FROM products
+		JOIN categories ON products.category_id = categories.id
+		WHERE products.id = ?`, id)
+
+	var product entities.Product
+
+	err := rows.Scan(
+		&product.Id,
+		&product.Name,
+		&product.Category.Name,
+		&product.Stock,
+		&product.Description,
+		&product.CreatedAt,
+		&product.UpdatedAt,
+	)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return product
+}
+
+func Update(id int, product entities.Product) bool {
+	Query, err := config.DB.Exec(`
+		UPDATE products SET 
+			name = ?, 
+			category_id = ?,
+			stock = ?,
+			description = ?,
+			updated_at = ?
+		WHERE id = ?`,
+		product.Name,
+		product.Category.Id,
+		product.Stock,
+		product.Description,
+		product.UpdatedAt,
+		id,
+	)
+
+	if err != nil {
+		panic(err)
+	}
+
+	result, err := Query.RowsAffected()
+	if err != nil {
+		panic(err)
+	}
+
+	return result > 0
+}
+
+func Delete(id int) error {
+	_, err := config.DB.Exec(`DELETE FROM products WHERE id = ?`, id)
+	return err
+}

@@ -33,29 +33,37 @@
   <!-- End of Navbar -->
 
   <div class="container mt-3">
-    <h2>List Categories</h2>
-    <hr>
-    <a href="/categories/add" class="btn btn-primary">Add Category</a>
-    <table class="table table-bordered mt-2 text-center">
-      <thead>
-        <tr>
-          <th>Nama</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{ range.categories }}
-        <tr>
-          <td>{{ .Name }}</td>
-          <td>
-            <a href="/categories/edit?id={{ .Id }}" class="btn btn-warning text-light">Edit</a>
-            <a href="/categories/delete?id={{ .Id }}" class="btn btn-danger text-light"
-              onclick="return confirm(`Are you sure went to delete this category ?`)">Delete</a>
-          </td>
-        </tr>
-        {{ end }}
-      </tbody>
-    </table>
+    <div class="row d-flex justify-content-center">
+      <div class="col-4">
+        <h2>Detail Products</h2>
+        <hr>
+
+        <form action="/product/add" method="POST">
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" name="name" autocomplete="off" value="{{ .product.Name }}" disabled>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Category</label>
+            <input type="text" class="form-control" name="category_id" autocomplete="off"
+              value="{{ .product.Category.Name }}" disabled>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Stock</label>
+            <input type="number" class="form-control" name="stock" autocomplete="off" value="{{ .product.Stock }}"
+              disabled>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" name="description" rows="3" disabled>{{ .product.Description }}</textarea>
+          </div>
+          <div class="float-end">
+            <a href="/product" class="btn btn-secondary">Back</a>
+          </div>
+        </form>
+      </div>
+    </div>
+
   </div>
 </body>
 
