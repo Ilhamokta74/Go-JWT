@@ -14,5 +14,5 @@ func Me(w http.ResponseWriter, r *http.Request) {
 		Name:  user.Name,
 		Email: user.Email,
 	}
-	helpers.Response(w, 200, "My Profile", userResponse)
+	helpers.Response(w, http.StatusOK, "My Profile", userResponse)
 }
